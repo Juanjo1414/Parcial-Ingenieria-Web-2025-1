@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { GlamGiantModule } from './glam-giant/glam-giant.module';
+import { GlamGiantModule } from './Usuarios/glam-giant.module';
+import { ProductosModule } from './Productos-de-maquillaje/productos/productos.module';
+import { PruebasDeProductosModule } from './pruebas-de-productos/pruebas-de-productos.module';
+import { PedidosYtransaccionesModule } from './pedidos-y-transacciones/pedidos-ytransacciones.module';
 
 @Module({
-  imports: [GlamGiantModule],
+  imports: [GlamGiantModule, ProductosModule, PruebasDeProductosModule, PedidosYtransaccionesModule],
   controllers: [AppController],
   providers: [AppService],
 })
