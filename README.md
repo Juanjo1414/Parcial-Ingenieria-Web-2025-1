@@ -1,7 +1,7 @@
 <<<<<<< HEAD
 # Parcial-Ingenieria-Web-2025-1
 
-Se crea el proyecto Y jara es el mejor :D
+Jara es el mejor :D
 =======
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
