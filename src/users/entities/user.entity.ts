@@ -12,16 +12,16 @@ export enum UserRole {
 @Entity() 
 export class User {
     @PrimaryGeneratedColumn('uuid')
-    id: String;
+    id: string;
 
     @Column()
-    name: String;
+    name: string;
 
     @Column({ unique: true }) // Se declara como único
-    email: String;
+    email: string;
 
     @Column()
-    password: String;
+    password: string;
 
     @Column({ type: 'enum', enum: UserRole, default: UserRole.CLIENT}) 
     role: UserRole; 

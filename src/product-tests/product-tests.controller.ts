@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ProductTestsService } from './product-tests.service';
-import { CreateProductTestDto } from './dto/create-product-test.dto';
+import { CreateProductsTestDto } from './dto/create-product-test.dto';
 import { UpdateProductTestDto } from './dto/update-product-test.dto';
 
 @Controller('product-tests')
@@ -8,7 +8,7 @@ export class ProductTestsController {
   constructor(private readonly productTestsService: ProductTestsService) {}
 
   @Post()
-  create(@Body() createProductTestDto: CreateProductTestDto) {
+  create(@Body() createProductTestDto: CreateProductsTestDto) {
     return this.productTestsService.create(createProductTestDto);
   }
 

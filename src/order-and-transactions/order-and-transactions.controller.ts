@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { OrderAndTransactionsService } from './order-and-transactions.service';
-import { CreateOrderAndTransactionDto } from './dto/create-order-and-transaction.dto';
+import { CreateOrderTransDto } from './dto/create-order-and-transaction.dto';
 import { UpdateOrderAndTransactionDto } from './dto/update-order-and-transaction.dto';
 
 @Controller('order-and-transactions')
@@ -8,7 +8,7 @@ export class OrderAndTransactionsController {
   constructor(private readonly orderAndTransactionsService: OrderAndTransactionsService) {}
 
   @Post()
-  create(@Body() createOrderAndTransactionDto: CreateOrderAndTransactionDto) {
+  create(@Body() createOrderAndTransactionDto: CreateOrderTransDto) {
     return this.orderAndTransactionsService.create(createOrderAndTransactionDto);
   }
 
