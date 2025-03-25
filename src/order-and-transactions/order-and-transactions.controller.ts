@@ -1,34 +1,47 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { OrderAndTransactionsService } from './order-and-transactions.service';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { OrderTransService } from './order-and-transactions.service';
 import { CreateOrderTransDto } from './dto/create-order-and-transaction.dto';
 import { UpdateOrderAndTransactionDto } from './dto/update-order-and-transaction.dto';
+import { Roles } from 'src/authentication/roles.decorator';
+import { AuthGuard } from 'src/authentication/authentication.guard';
+import { OrderAndTransaction } from './entities/order-and-transaction.entity';
 
-@Controller('order-and-transactions')
-export class OrderAndTransactionsController {
-  constructor(private readonly orderAndTransactionsService: OrderAndTransactionsService) {}
+@Controller('orders')
+export class OrderTransController {
+  constructor(private readonly orderTransService: OrderTransService) {}
 
   @Post()
-  create(@Body() createOrderAndTransactionDto: CreateOrderTransDto) {
-    return this.orderAndTransactionsService.create(createOrderAndTransactionDto);
+  @Roles('admin','employee', 'client')
+  @UseGuards(AuthGuard)
+  async create(@Body() createOrderDto: CreateOrderTransDto): Promise<OrderAndTransaction> {
+    return this.orderTransService.create(createOrderDto);
   }
 
   @Get()
-  findAll() {
-    return this.orderAndTransactionsService.findAll();
+  @Roles('admin')
+  @UseGuards(AuthGuard)
+  async findAll(): Promise<OrderAndTransaction[]> {
+    return this.orderTransService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.orderAndTransactionsService.findOne(+id);
+  @Roles('admin','employee', 'client')
+  @UseGuards(AuthGuard)
+  async findOne(@Param('id') id: string): Promise<OrderAndTransaction> {
+    return this.orderTransService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderAndTransactionDto: UpdateOrderAndTransactionDto) {
-    return this.orderAndTransactionsService.update(+id, updateOrderAndTransactionDto);
+  @Roles('admin')
+  @UseGuards(AuthGuard)
+  async update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderAndTransactionDto): Promise<OrderAndTransaction> {
+    return this.orderTransService.update(id, updateOrderDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.orderAndTransactionsService.remove(+id);
+  @Roles('admin')
+  @UseGuards(AuthGuard)
+  async remove(@Param('id') id: string): Promise<void> {
+    await this.orderTransService.remove(id);
   }
 }
