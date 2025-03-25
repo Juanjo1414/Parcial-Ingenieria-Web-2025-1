@@ -1,34 +1,47 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ProductTestsService } from './product-tests.service';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { ProductsTestsService } from './product-tests.service';
 import { CreateProductsTestDto } from './dto/create-product-test.dto';
 import { UpdateProductTestDto } from './dto/update-product-test.dto';
+import { ProductTest } from './entities/product-test.entity';
+import { Roles } from 'src/authentication/roles.decorator';
+import { AuthGuard } from 'src/authentication/authentication.guard';
 
-@Controller('product-tests')
-export class ProductTestsController {
-  constructor(private readonly productTestsService: ProductTestsService) {}
+@Controller('products-tests')
+export class ProductsTestsController {
+  constructor(private readonly productsTestsService: ProductsTestsService) {}
 
   @Post()
-  create(@Body() createProductTestDto: CreateProductsTestDto) {
-    return this.productTestsService.create(createProductTestDto);
+  @Roles('admin', 'employee')
+  @UseGuards(AuthGuard)
+  async create(@Body() createProductsTestDto: CreateProductsTestDto): Promise<ProductTest> {
+    return this.productsTestsService.create(createProductsTestDto);
   }
 
   @Get()
-  findAll() {
-    return this.productTestsService.findAll();
+  @Roles('admin', 'employee')
+  @UseGuards(AuthGuard)
+  async findAll(): Promise<ProductTest[]> {
+    return this.productsTestsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productTestsService.findOne(+id);
+  @Roles('admin', 'employee', 'tester')
+  @UseGuards(AuthGuard)
+  async findOne(@Param('id') id: string): Promise<ProductTest> {
+    return this.productsTestsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductTestDto: UpdateProductTestDto) {
-    return this.productTestsService.update(+id, updateProductTestDto);
+  @Roles('admin', 'employee')
+  @UseGuards(AuthGuard)
+  async update(@Param('id') id: string, @Body() updateProductsTestDto: UpdateProductTestDto): Promise<ProductTest> {
+    return this.productsTestsService.update(id, updateProductsTestDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productTestsService.remove(+id);
+  @Roles('admin')
+  @UseGuards(AuthGuard)
+  async remove(@Param('id') id: string): Promise<void> {
+    await this.productsTestsService.remove(id);
   }
 }

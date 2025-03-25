@@ -7,7 +7,7 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 import { AppModule } from './app.module';
 
-console.log('DATABASE_URL desde dotenv:', process.env.DATABASE_URL); // 🔍 Depuración
+console.log('DATABASE_URL desde dotenv:', process.env.DATABASE_URL); 
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

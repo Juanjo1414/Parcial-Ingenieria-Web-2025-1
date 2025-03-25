@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
-import { parse } from 'url'; // 📌 Importamos url parser
+import { parse } from 'url'; 
 import { UsersModule } from './users/users.module';
 import { MakeupProductsModule } from './makeup-products/makeup-products.module';
-import { ProductTestsModule } from './product-tests/product-tests.module';
+import { ProductsTestsModule } from './product-tests/product-tests.module';
 import { OrderAndTransactionsModule } from './order-and-transactions/order-and-transactions.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -37,7 +37,7 @@ const dbUrl = new URL(process.env.DATABASE_URL);
         },
       },
     }),
-    UsersModule, MakeupProductsModule, ProductTestsModule, OrderAndTransactionsModule, AuthenticationModule, 
+    UsersModule, MakeupProductsModule, ProductsTestsModule, OrderAndTransactionsModule, AuthenticationModule, 
   ],
   controllers: [AppController],
   providers: [AppService],
