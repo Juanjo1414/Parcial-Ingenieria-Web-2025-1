@@ -6,7 +6,7 @@ import { parse } from 'url';
 import { UsersModule } from './users/users.module';
 import { MakeupProductsModule } from './makeup-products/makeup-products.module';
 import { ProductsTestsModule } from './product-tests/product-tests.module';
-import { OrderAndTransactionsModule } from './order-and-transactions/order-and-transactions.module';
+import { OrderTransModule } from './order-and-transactions/order-and-transactions.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthenticationModule } from './authentication/authentication.module';
@@ -37,7 +37,7 @@ const dbUrl = new URL(process.env.DATABASE_URL);
         },
       },
     }),
-    UsersModule, MakeupProductsModule, ProductsTestsModule, OrderAndTransactionsModule, AuthenticationModule, 
+    UsersModule, MakeupProductsModule, ProductsTestsModule, OrderTransModule, AuthenticationModule, 
   ],
   controllers: [AppController],
   providers: [AppService],
