@@ -8,7 +8,7 @@ export class ProductTest {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => User, (user) => user.productTests, { onDelete: 'CASCADE', eager: true })
+  @ManyToOne(() => User, (user) => user.productTests, { onDelete: 'CASCADE', eager: true }) 
   tester: User;
 
   @ManyToOne(() => MakeupProduct, (product) => product.productTests, { onDelete: 'CASCADE', eager: true })

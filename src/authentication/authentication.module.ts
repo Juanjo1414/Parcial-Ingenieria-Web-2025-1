@@ -13,7 +13,7 @@ dotenv.config();
   imports: [
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
-      secret: process.env.JWT_SECRET || 's3cr3t0_ultr4_S3gur0',
+      secret: process.env.JWT_SECRET || 'Jara1414',
       signOptions: {expiresIn: '1h'},
     }),
   ],

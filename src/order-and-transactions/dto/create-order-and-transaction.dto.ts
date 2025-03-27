@@ -6,7 +6,7 @@ export class CreateOrderTransDto {
     clientId: string;
   
     @IsArray()
-    @IsUUID("all", { each: true }) 
+    @IsUUID("all", { each: true })  
     productIds: string[];
   
     @IsNumber()
