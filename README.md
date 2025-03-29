@@ -1,6 +1,6 @@
 <<<<<<< HEAD
 # Parcial-Ingenieria-Web-2025-1
-
+Por: Juan Jose Jaramillo Mora y Jaider Camilo Henao
 Jara es el mejor :D
 =======
 <p align="center">
