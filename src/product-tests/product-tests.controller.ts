@@ -5,43 +5,40 @@ import { UpdateProductTestDto } from './dto/update-product-test.dto';
 import { ProductTest } from './entities/product-test.entity';
 import { Roles } from 'src/authentication/roles.decorator';
 import { AuthGuard } from 'src/authentication/authentication.guard';
+import { RolesGuard } from 'src/authentication/roles.guard';
 
 @Controller('products-tests')
+@UseGuards(AuthGuard, RolesGuard)  // Aplica ambos guards a todo el controlador
 export class ProductsTestsController {
   constructor(private readonly productsTestsService: ProductsTestsService) {}
 
   @Post()
   @Roles('admin', 'employee')
-  @UseGuards(AuthGuard)
   async create(
     @Body() createProductsTestDto: CreateProductsTestDto,
-    @Req() req: any,  // Aquí puedes importar Request de 'express' si quieres tipo más fuerte
+    @Req() req: any,
   ): Promise<ProductTest> {
     const testerId = req.user?.id;
     if (!testerId) {
       throw new UnauthorizedException('No se pudo obtener el ID del tester. Por favor, inicia sesión de nuevo.');
     }
-    // Pasa ambos argumentos: DTO y testerId
     return this.productsTestsService.create(createProductsTestDto, testerId);
   }
 
   @Get()
-  @Roles('admin', 'employee')
-  @UseGuards(AuthGuard)
+  @Roles('admin', 'employee', 'tester')
   async findAll(): Promise<ProductTest[]> {
     return this.productsTestsService.findAll();
   }
 
   @Get(':id')
   @Roles('admin', 'employee', 'tester')
-  @UseGuards(AuthGuard)
   async findOne(@Param('id') id: string): Promise<ProductTest> {
     return this.productsTestsService.findOne(id);
   }
 
   @Patch(':id')
   @Roles('admin', 'employee')
-  @UseGuards(AuthGuard)
   async update(
     @Param('id') id: string,
     @Body() updateProductsTestDto: UpdateProductTestDto,
@@ -51,7 +48,6 @@ export class ProductsTestsController {
 
   @Delete(':id')
   @Roles('admin')
-  @UseGuards(AuthGuard)
   async remove(@Param('id') id: string): Promise<void> {
     await this.productsTestsService.remove(id);
   }
