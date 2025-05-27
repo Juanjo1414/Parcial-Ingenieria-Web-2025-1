@@ -4,10 +4,6 @@ export class CreateProductsTestDto {
     
     @IsUUID()
     @IsNotEmpty()
-    testerId: string;
-
-    @IsUUID()
-    @IsNotEmpty()
     productId: string;
 
     @IsString()

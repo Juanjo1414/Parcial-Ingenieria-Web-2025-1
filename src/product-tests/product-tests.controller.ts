@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, UnauthorizedException } from '@nestjs/common';
 import { ProductsTestsService } from './product-tests.service';
 import { CreateProductsTestDto } from './dto/create-product-test.dto';
 import { UpdateProductTestDto } from './dto/update-product-test.dto';
@@ -13,8 +13,16 @@ export class ProductsTestsController {
   @Post()
   @Roles('admin', 'employee')
   @UseGuards(AuthGuard)
-  async create(@Body() createProductsTestDto: CreateProductsTestDto): Promise<ProductTest> {
-    return this.productsTestsService.create(createProductsTestDto);
+  async create(
+    @Body() createProductsTestDto: CreateProductsTestDto,
+    @Req() req: any,  // Aquí puedes importar Request de 'express' si quieres tipo más fuerte
+  ): Promise<ProductTest> {
+    const testerId = req.user?.id;
+    if (!testerId) {
+      throw new UnauthorizedException('No se pudo obtener el ID del tester. Por favor, inicia sesión de nuevo.');
+    }
+    // Pasa ambos argumentos: DTO y testerId
+    return this.productsTestsService.create(createProductsTestDto, testerId);
   }
 
   @Get()
@@ -34,7 +42,10 @@ export class ProductsTestsController {
   @Patch(':id')
   @Roles('admin', 'employee')
   @UseGuards(AuthGuard)
-  async update(@Param('id') id: string, @Body() updateProductsTestDto: UpdateProductTestDto): Promise<ProductTest> {
+  async update(
+    @Param('id') id: string,
+    @Body() updateProductsTestDto: UpdateProductTestDto,
+  ): Promise<ProductTest> {
     return this.productsTestsService.update(id, updateProductsTestDto);
   }
 
