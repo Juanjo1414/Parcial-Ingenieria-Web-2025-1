@@ -10,7 +10,7 @@ describe('AuthGuard', () => {
   beforeEach(() => {
     jwtService = new JwtService({secret: 'test-secret' });
     reflector = new Reflector();
-    authGuard = new AuthGuard(jwtService, reflector);
+    authGuard = new AuthGuard(jwtService);
   });
 
   it('should be defined', () => {
