@@ -9,6 +9,12 @@ import { Roles } from 'src/authentication/roles.decorator';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  // Ruta pública para registro, no usa guard ni roles
+  @Post('register')
+  register(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.register(createUserDto);
+  }
+
   @Post()
   @Roles('admin','employee')
   @UseGuards(AuthGuard)
