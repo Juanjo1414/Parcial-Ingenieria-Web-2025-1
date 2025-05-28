@@ -33,6 +33,10 @@ export class MakeupProduct {
   @Max(10)
   durability_score: number;
 
+  @Column({ type: 'decimal', precision: 10, scale: 2 }) 
+  @Min(0)
+  price: number;
+
   @OneToMany(() => ProductTest, (productTest) => productTest.product)
   productTests: ProductTest[];
 }

@@ -25,4 +25,8 @@ export class CreateMakeupProductDto {
   @Min(1)
   @Max(10)
   durability_score: number; 
+
+  @IsNumber()
+  @Min(0)
+  price: number; 
 }
