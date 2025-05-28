@@ -1,4 +1,4 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core'; 
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 
@@ -12,14 +12,15 @@ console.log('DATABASE_URL desde dotenv:', process.env.DATABASE_URL);
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Habilitar CORS para el frontend en http://localhost:5173
+  // ✅ Habilitar CORS para desarrollo y producción
   app.enableCors({
-    origin: 'http://localhost:5173',
+    origin: [
+      'http://localhost:5173',
+      'https://proyecto-ingenieria-web-2025-1-fron.vercel.app'
+    ],
     credentials: true,
   });
 
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
-
-
