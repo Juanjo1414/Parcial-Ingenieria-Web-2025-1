@@ -37,4 +37,5 @@ export class User {
 
     @OneToMany(() => ProductTest, (productTest) => productTest.tester)
     productTests: ProductTest[];
+    purchases: any;
 }

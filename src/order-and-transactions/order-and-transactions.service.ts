@@ -15,24 +15,26 @@ export class OrderTransService {
     @InjectRepository(MakeupProduct) private productRepo: Repository<MakeupProduct>,
   ) {}
 
-  async create(createOrderDto: CreateOrderTransDto): Promise<OrderAndTransaction> {
-    const { clientId, productIds, total_amount, payment_status } = createOrderDto;
+  async create(clientId: string, createOrderDto: CreateOrderTransDto): Promise<OrderAndTransaction> {
+  const { productIds, total_amount, payment_status } = createOrderDto;
 
-    const client = await this.userRepo.findOne({ where: { id: clientId } });
-    if (!client) throw new NotFoundException(`Client with ID ${clientId} not found`);
+  const client = await this.userRepo.findOne({ where: { id: clientId } });
+  if (!client) throw new NotFoundException(`Client with ID ${clientId} not found`);
 
-    const products = await this.productRepo.findByIds(productIds);
-    if (products.length !== productIds.length) throw new NotFoundException(`One or more products not found`);
+  const products = await this.productRepo.findByIds(productIds);
+  if (products.length !== productIds.length)
+    throw new NotFoundException(`One or more products not found`);
 
-    const newOrder = this.orderRepo.create({
-      client,
-      products,
-      total_amount,
-      payment_status,
-    });
+  const newOrder = this.orderRepo.create({
+    client,
+    products,
+    total_amount,
+    payment_status: payment_status
+  });
 
-    return await this.orderRepo.save(newOrder);
-  }
+  return await this.orderRepo.save(newOrder);
+}
+
 
   async findAll(): Promise<OrderAndTransaction[]> {
     return await this.orderRepo.find({ relations: ['client', 'products'] });

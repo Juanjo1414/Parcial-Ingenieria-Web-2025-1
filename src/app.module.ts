@@ -10,6 +10,7 @@ import { OrderTransModule } from './order-and-transactions/order-and-transaction
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { UserPurchasesModule } from './user-purchases/user-purchases.module';
 
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
@@ -37,7 +38,7 @@ const dbUrl = new URL(process.env.DATABASE_URL);
         },
       },
     }),
-    UsersModule, MakeupProductsModule, ProductsTestsModule, OrderTransModule, AuthenticationModule, 
+    UsersModule, MakeupProductsModule, ProductsTestsModule, OrderTransModule, AuthenticationModule, UserPurchasesModule, 
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -29,10 +29,10 @@ export class AuthenticationService {
 
       const token = this.jwtService.sign(
          {
-            id: user.id,
+            id: user.id, 
             email: user.email,
             name: user.name,
-            role: user.role
+            role: user.role,
          },
          { secret: process.env.JWT_SECRET || 'Jara1414' }
       );
