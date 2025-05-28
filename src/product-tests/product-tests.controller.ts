@@ -13,7 +13,7 @@ export class ProductsTestsController {
   constructor(private readonly productsTestsService: ProductsTestsService) {}
 
   @Post()
-  @Roles('admin', 'employee')
+  @Roles('admin', 'tester')
   async create(
     @Body() createProductsTestDto: CreateProductsTestDto,
     @Req() req: any,
@@ -26,19 +26,19 @@ export class ProductsTestsController {
   }
 
   @Get()
-  @Roles('admin', 'employee', 'tester')
+  @Roles('admin', 'tester')
   async findAll(): Promise<ProductTest[]> {
     return this.productsTestsService.findAll();
   }
 
   @Get(':id')
-  @Roles('admin', 'employee', 'tester')
+  @Roles('admin', 'tester')
   async findOne(@Param('id') id: string): Promise<ProductTest> {
     return this.productsTestsService.findOne(id);
   }
 
   @Patch(':id')
-  @Roles('admin', 'employee')
+  @Roles('admin', 'tester')
   async update(
     @Param('id') id: string,
     @Body() updateProductsTestDto: UpdateProductTestDto,
